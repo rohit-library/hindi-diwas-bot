@@ -3,306 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>हिंदी दिवस एआई सहायक | Hindi Diwas Chatbot</title>
+  <title>संपूर्ण हिंदी एआई सहायक | Hindi AI Assistant</title>
   <style>
     :root {
       --primary: #d94e1e;
-      --primary-dark: #b3390e;
-      --accent: #ff9933;
-      --bg-light: #fdfaf6;
+      --primary-dark: #a3320b;
+      --bg-color: #f7f2eb;
       --card-bg: #ffffff;
-      --text-dark: #2c221e;
+      --text-main: #2b231f;
       --bot-bubble: #f4ece1;
       --user-bubble: #d94e1e;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
 
-    body {
-      background: #f3eae0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    body { background: #eae2d6; height: 100vh; display: flex; justify-content: center; align-items: center; }
 
     .app-container {
-      width: 100%;
-      max-width: 900px;
-      height: 100vh;
-      background: var(--bg-light);
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      width: 100%; max-width: 950px; height: 100vh; background: var(--bg-color);
+      display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
 
     /* HEADER */
     .header {
-      background: linear-gradient(135deg, #b3390e, #e66020, #ff9933);
-      color: white;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: linear-gradient(135deg, #a3320b, #d94e1e, #ff8800);
+      color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;
     }
-
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .logo-icon {
-      width: 48px; height: 48px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px; border: 1px solid rgba(255,255,255,0.3);
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 45px; height: 45px; background: rgba(255,255,255,0.2);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;
     }
-
-    .title-box h1 { font-size: 20px; font-weight: 700; letter-spacing: 0.5px; }
-    .title-box p { font-size: 12px; opacity: 0.9; margin-top: 2px; }
+    .title-box h1 { font-size: 19px; font-weight: 700; }
+    .title-box p { font-size: 12px; opacity: 0.9; }
 
     .header-actions { display: flex; gap: 8px; }
-    .action-btn {
-      background: rgba(255,255,255,0.2);
-      border: none; color: white;
-      width: 38px; height: 38px; border-radius: 50%;
-      cursor: pointer; font-size: 16px; transition: 0.2s;
+    .icon-btn {
+      background: rgba(255,255,255,0.2); border: none; color: white;
+      width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-size: 16px;
     }
-    .action-btn:hover { background: rgba(255,255,255,0.35); transform: scale(1.05); }
+    .icon-btn:hover { background: rgba(255,255,255,0.35); }
 
     /* CHAT AREA */
     .chat-area {
-      flex: 1; overflow-y: auto; padding: 20px;
-      scroll-behavior: smooth;
-      background-image: radial-gradient(#e2d5c3 1px, transparent 1px);
-      background-size: 20px 20px;
+      flex: 1; overflow-y: auto; padding: 20px; scroll-behavior: smooth;
+      background-image: radial-gradient(#dfd4c3 1px, transparent 1px); background-size: 18px 18px;
     }
 
     .welcome-card {
-      text-align: center; background: var(--card-bg);
-      border-radius: 16px; padding: 25px; margin: 20px 0;
-      border: 1px solid #ebd9c8; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      text-align: center; background: var(--card-bg); border-radius: 16px;
+      padding: 22px; margin: 15px 0; border: 1px solid #e3d5c5;
     }
-    .welcome-card h2 { color: var(--primary); font-size: 22px; margin-bottom: 8px; }
+    .welcome-card h2 { color: var(--primary); font-size: 21px; margin-bottom: 6px; }
     .welcome-card p { color: #665; font-size: 14px; line-height: 1.5; }
 
-    .suggestion-chips {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px;
-    }
+    .suggestion-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 15px; }
     .chip {
-      background: #fbf3ea; border: 1px solid #e2cbb8; color: var(--primary-dark);
-      padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: 0.2s;
+      background: #fbf5ee; border: 1px solid #e0cebe; color: var(--primary-dark);
+      padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
     }
-    .chip:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .chip:hover { background: var(--primary); color: white; }
 
     /* MESSAGES */
-    .message-row { display: flex; margin-bottom: 16px; animation: fadeIn 0.3s ease-in; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .message-row { display: flex; margin-bottom: 16px; animation: fadeIn 0.25s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
     .user-row { justify-content: flex-end; }
     .bot-row { justify-content: flex-start; }
 
-    .bubble {
-      max-width: 85%; padding: 14px 18px; border-radius: 18px;
-      font-size: 14.5px; line-height: 1.6; position: relative;
-    }
-    .user-bubble {
-      background: var(--user-bubble); color: white;
-      border-bottom-right-radius: 4px; box-shadow: 0 3px 8px rgba(217, 78, 30, 0.25);
-    }
-    .bot-bubble {
-      background: var(--card-bg); color: var(--text-dark);
-      border-bottom-left-radius: 4px; border: 1px solid #ebd8c7;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
-    }
+    .bubble { max-width: 85%; padding: 14px 18px; border-radius: 18px; font-size: 14.5px; line-height: 1.6; }
+    .user-bubble { background: var(--user-bubble); color: white; border-bottom-right-radius: 4px; }
+    .bot-bubble { background: var(--card-bg); color: var(--text-main); border-bottom-left-radius: 4px; border: 1px solid #ebd9c8; }
 
-    .bot-title { color: var(--primary-dark); font-weight: bold; font-size: 16px; margin-bottom: 8px; }
-    .bot-content ul { margin-left: 18px; margin-top: 6px; }
-    .bot-content li { margin-bottom: 4px; }
+    .bot-title { color: var(--primary-dark); font-weight: bold; font-size: 16px; margin-bottom: 6px; }
     
     .speak-btn {
       display: inline-flex; align-items: center; gap: 5px; margin-top: 10px;
-      padding: 4px 10px; background: #f0e6da; border: none; border-radius: 12px;
+      padding: 5px 12px; background: #f2e7db; border: none; border-radius: 12px;
       font-size: 12px; color: var(--primary-dark); cursor: pointer; font-weight: 600;
     }
-    .speak-btn:hover { background: #e3d2c1; }
+    .speak-btn:hover { background: #e3d3c1; }
 
-    /* QUICK BAR & INPUT */
-    .quick-bar {
-      display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px;
-      background: #f7ede2; border-top: 1px solid #e8d7c8; scrollbar-width: none;
-    }
-    .quick-bar::-webkit-scrollbar { display: none; }
-    .quick-btn {
-      white-space: nowrap; background: white; border: 1px solid #e0cdbc;
-      color: var(--text-dark); padding: 7px 14px; border-radius: 18px;
-      font-size: 12.5px; cursor: pointer; transition: 0.2s; font-weight: 500;
-    }
-    .quick-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
-
-    .input-bar {
-      display: flex; gap: 10px; padding: 14px 16px; background: white;
-      border-top: 1px solid #e8d8ca; align-items: center;
-    }
-
+    /* INPUT BAR */
+    .input-bar { display: flex; gap: 10px; padding: 14px 16px; background: white; border-top: 1px solid #e6d8ca; }
     #userInput {
-      flex: 1; border: 1.5px solid #dcc8b7; border-radius: 25px;
-      padding: 13px 20px; font-size: 15px; outline: none; background: #faf6f1;
-      transition: 0.2s;
+      flex: 1; border: 1.5px solid #dcc8b7; border-radius: 25px; padding: 13px 20px; font-size: 15px; outline: none; background: #faf6f1;
     }
-    #userInput:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(217,78,30,0.12); }
+    #userInput:focus { border-color: var(--primary); background: white; }
 
     .mic-btn, .send-btn {
-      width: 48px; height: 48px; border-radius: 50%; border: none;
-      cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center;
-      transition: 0.2s; flex-shrink: 0;
+      width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer; font-size: 20px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .mic-btn { background: #f0e2d5; color: var(--primary-dark); }
-    .mic-btn:hover { background: #e3d0bf; }
     .mic-btn.listening { background: #e62e2e; color: white; animation: pulse 1s infinite; }
-
-    .send-btn { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(217,78,30,0.3); }
-    .send-btn:hover { background: var(--primary-dark); }
+    .send-btn { background: var(--primary); color: white; }
 
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
 
     /* DARK MODE */
     body.dark { background: #12100e; }
     body.dark .app-container { background: #1a1714; color: #e6dfd5; }
-    body.dark .chat-area { background-image: radial-gradient(#2d2822 1px, transparent 1px); }
     body.dark .welcome-card { background: #24201c; border-color: #3b342e; }
-    body.dark .welcome-card h2 { color: #ff9933; }
-    body.dark .welcome-card p { color: #b8ad9e; }
-    body.dark .chip, body.dark .quick-btn { background: #2a241f; color: #e6dfd5; border-color: #423830; }
+    body.dark .welcome-card h2 { color: #ff8800; }
+    body.dark .chip { background: #2a241f; color: #e6dfd5; border-color: #423830; }
     body.dark .bot-bubble { background: #24201c; color: #e6dfd5; border-color: #3d352e; }
-    body.dark .bot-title { color: #ff9933; }
-    body.dark .quick-bar { background: #1f1b17; border-color: #332c25; }
+    body.dark .bot-title { color: #ff8800; }
     body.dark .input-bar { background: #1a1714; border-color: #332c25; }
     body.dark #userInput { background: #26211c; color: white; border-color: #423830; }
 
     @media(max-width: 600px) {
-      .app-container { height: 100vh; border-radius: 0; }
-      .bubble { max-width: 90%; }
-      .title-box h1 { font-size: 17px; }
+      .app-container { height: 100vh; }
+      .bubble { max-width: 92%; }
     }
   </style>
 </head>
 <body>
 
 <div class="app-container">
-  <!-- HEADER -->
   <header class="header">
     <div class="brand">
-      <div class="logo-icon">🇮🇳</div>
+      <div class="logo">🇮🇳</div>
       <div class="title-box">
-        <h1>हिंदी दिवस एआई सहायक</h1>
-        <p>14 सितम्बर - राजभाषा हिंदी का संपूर्ण ज्ञानकोष</p>
+        <h1>संपूर्ण हिंदी एआई सहायक</h1>
+        <p>हिंदी साहित्य, इतिहास, व्याकरण एवं किसी भी कवि की जानकारी</p>
       </div>
     </div>
     <div class="header-actions">
-      <button class="action-btn" onclick="clearChat()" title="चैट साफ़ करें">🗑️</button>
-      <button class="action-btn" onclick="toggleTheme()" title="डार्क मोड">🌙</button>
+      <button class="icon-btn" onclick="clearChat()" title="चैट साफ़ करें">🗑️</button>
+      <button class="icon-btn" onclick="toggleTheme()" title="डार्क मोड">🌙</button>
     </div>
   </header>
 
-  <!-- CHAT AREA -->
   <main class="chat-area" id="chatArea">
     <div class="welcome-card" id="welcomeCard">
-      <h2>नमस्ते! ️ हिंदी दिवस सहायक में आपका स्वागत है</h2>
-      <p>हिंदी भाषा के इतिहास, संविधान, प्रसिद्ध कवियों, रचनाओं, सुंदर विचारों व नारों के बारे में कुछ भी पूछिए।</p>
+      <h2>नमस्ते! 👋 हिंदी के बारे में कुछ भी पूछिए</h2>
+      <p>किसी भी कवि की जीवनी, रचनाएं, उपन्यास, हिंदी इतिहास, व्याकरण या छंद-अलंकार के बारे में सवाल लिखें या बोलकर पूछें।</p>
       
       <div class="suggestion-chips">
-        <div class="chip" onclick="askQuick('हिंदी दिवस का इतिहास')">📜 इतिहास क्या है?</div>
-        <div class="chip" onclick="askQuick('संविधान और राजभाषा')">🏛️ संविधान में स्थान</div>
-        <div class="chip" onclick="askQuick('प्रसिद्ध कवि और लेखक')">✍️ महान साहित्यकार</div>
-        <div class="chip" onclick="askQuick('हिंदी दिवस नारे और कविता')">✨ नारे और विचार</div>
-        <div class="chip" onclick="askQuick('हिंदी के रोचक तथ्य')">💡 रोचक तथ्य</div>
+        <div class="chip" onclick="askQuick('मुंशी प्रेमचंद की जीवनी')">📚 मुंशी प्रेमचंद</div>
+        <div class="chip" onclick="askQuick('रामधारी सिंह दिनकर')">✍️ रामधारी सिंह दिनकर</div>
+        <div class="chip" onclick="askQuick('हिंदी दिवस का इतिहास')">📜 हिंदी दिवस का इतिहास</div>
+        <div class="chip" onclick="askQuick('अनुच्छेद 343 क्या है')">🏛️ संविधान में राजभाषा</div>
+        <div class="chip" onclick="askQuick('रस और अलंकार')">📖 व्याकरण व अलंकार</div>
       </div>
     </div>
   </main>
 
-  <!-- QUICK BUTTONS -->
-  <div class="quick-bar">
-    <button class="quick-btn" onclick="askQuick('14 सितंबर ही क्यों?')">📅 14 सितंबर ही क्यों?</button>
-    <button class="quick-btn" onclick="askQuick('विश्व हिंदी दिवस और राष्ट्रीय हिंदी दिवस')">🌐 विश्व हिंदी दिवस से अंतर</button>
-    <button class="quick-btn" onclick="askQuick('मुंशी प्रेमचंद')">📚 मुंशी प्रेमचंद</button>
-    <button class="quick-btn" onclick="askQuick('अनुच्छेद 343')">⚖️ अनुच्छेद 343</button>
-    <button class="quick-btn" onclick="askQuick('हिंदी दिवस पर स्लोगन')">📣 स्लोगन/नारे</button>
-  </div>
-
-  <!-- INPUT AREA -->
   <div class="input-bar">
-    <input type="text" id="userInput" placeholder="हिंदी दिवस के बारे में पूछें... (उदा: इतिहास, कवि, अनुच्छेद 343)" autocomplete="off">
+    <input type="text" id="userInput" placeholder="हिंदी या किसी भी साहित्यकार के बारे में पूछें..." autocomplete="off">
     <button class="mic-btn" id="micBtn" onclick="startVoice()" title="आवाज़ से पूछें">🎤</button>
     <button class="send-btn" onclick="handleSend()" title="भेजें">➤</button>
   </div>
 </div>
 
 <script>
-  // KNOWLEDGE BASE (हिंदी दिवस व हिंदी साहित्य का विशाल डेटाबेस)
-  const knowledgeBase = [
+  // HIGH-PRIORITY LOCAL KNOWLEDGE (FOR INSTANT HINDI DIWAS & GRAMMAR ANSWERS)
+  const localKnowledge = [
     {
-      keywords: ["इतिहास", "history", "कब् से", "क्यों मनाया जाता है", "14 सितंबर", "14 sep", "14 september", "शुरुआत", "start"],
-      title: "📜 हिंदी दिवस का इतिहास और शुरुआत",
-      content: `<b>हिंदी दिवस 14 सितम्बर को ही क्यों मनाया जाता है?</b><br><br>
-      • <b>14 सितम्बर 1949:</b> संविधान सभा ने एक मत से निर्णय लिया था कि हिंदी भारत की <b>राजभाषा (Official Language)</b> होगी।<br>
-      • <b>व्यवहार राजेंद्र सिंह:</b> इस दिन हिंदी के महान पुरोधा व्यवहार राजेंद्र सिंह का 50वाँ जन्मदिन था, जिन्होंने हिंदी को राजभाषा बनाने के लिए अथक प्रयास किया।<br>
-      • <b>पहला हिंदी दिवस:</b> राष्ट्रभाषा प्रचार समिति, वर्धा के अनुरोध पर वर्ष <b>1953 से हर साल 14 सितम्बर</b> को देशभर में हिंदी दिवस मनाया जाता है।`
+      keywords: ["इतिहास", "14 सितंबर", "14 sep", "क्यों मनाया जाता है", "शुरुआत"],
+      title: "📜 हिंदी दिवस का इतिहास",
+      content: "14 सितम्बर 1949 को संविधान सभा ने हिंदी को भारत की राजभाषा घोषित किया था। इस दिन हिंदी के पुरोधा व्यवहार राजेंद्र सिंह का 50वाँ जन्मदिन भी था। राष्ट्रभाषा प्रचार समिति, वर्धा के अनुरोध पर 1953 से हर साल 14 सितम्बर को हिंदी दिवस मनाया जाता है।"
     },
     {
-      keywords: ["संविधान", "constitution", "धारा 343", "अनुच्छेद 343", "article 343", "कानून", "राजभाषा", "राष्ट्रभाषा"],
-      title: "🏛️ संविधान में हिंदी का स्थान (अनुच्छेद 343)",
-      content: `<b>संविधान और राजभाषा का दर्जा:</b><br><br>
-      • <b>अनुच्छेद 343(1):</b> भारतीय संविधान के अनुच्छेद 343(1) के अनुसार, <i>"संघ की राजभाषा हिंदी और लिपि देवनागरी होगी।"</i><br>
-      • <b>भाग 17:</b> संविधान के भाग 17 में अनुच्छेद 343 से 351 तक राजभाषा से संबंधित प्रावधान दिए गए हैं।<br>
-      • <b>ध्यान दें:</b> हिंदी भारत की <b>'राजभाषा' (Official Language)</b> है (सरकारी कामकाज की भाषा), इसे संवैधानिक रूप से 'राष्ट्रभाषा' का दर्जा प्राप्त नहीं है, लेकिन यह भारत की संपर्क भाषा है।`
+      keywords: ["अनुच्छेद 343", "संविधान", "राजभाषा", "धारा 343", "कानून"],
+      title: "🏛️ संविधान में हिंदी (अनुच्छेद 343)",
+      content: "भारतीय संविधान के अनुच्छेद 343(1) के अनुसार संघ की राजभाषा हिंदी और लिपि देवनागरी होगी। संविधान के भाग 17 में अनुच्छेद 343 से 351 तक राजभाषा के संबंध में विस्तृत प्रावधान दिए गए हैं।"
     },
     {
-      keywords: ["विश्व हिंदी दिवस", "world hindi day", "10 जनवरी", "10 jan", "अंतर", "difference"],
-      title: "🌐 राष्ट्रीय हिंदी दिवस vs विश्व हिंदी दिवस",
-      content: `<b>दोनों में मुख्य अंतर:</b><br><br>
-      1. <b>राष्ट्रीय हिंदी दिवस (14 सितम्बर):</b> यह भारत में 1949 में हिंदी को राजभाषा घोषित करने की स्मृति में मनाया जाता है।<br>
-      2. <b>विश्व हिंदी दिवस (10 जनवरी):</b> यह पूरे विश्व में हिंदी के प्रचार-प्रसार के लिए मनाया जाता है। 10 जनवरी 1975 को नागपुर में पहला 'विश्व हिंदी सम्मेलन' आयोजित हुआ था। पूर्व प्रधानमंत्री डॉ. मनमोहन सिंह ने 2006 में इसकी शुरुआत की थी।`
-    },
-    {
-      keywords: ["कवि", "लेखक", "साहित्यकार", "प्रेमचंद", "दिनकर", "बच्चन", "महादेवी", "कबीर", "तुलसी", "writer", "poet"],
-      title: "✍️ हिंदी साहित्य के महान स्तंभ",
-      content: `<b>हिंदी के प्रमुख साहित्यकार व उनका योगदान:</b><br><br>
-      • <b>मुंशी प्रेमचंद:</b> उपन्यास सम्राट (गोदान, गबन, ईदगाह)।<br>
-      • <b>हरिवंश राय बच्चन:</b> मधुशाला के रचयिता और प्रसिद्ध हालावादी कवि।<br>
-      • <b>रामधारी सिंह 'दिनकर':</b> राष्ट्रकवि (रश्मिरथी, उरर्वशी)।<br>
-      • <b>महादेवी वर्मा:</b> आधुनिक मीरा (यामा, नीरजा)।<br>
-      • <b>सूर्यकांत त्रिपाठी 'निराला':</b> छायावाद के प्रमुख स्तंभ (राम की शक्ति पूजा)।<br>
-      • <b>कबीर, तुलसी, सूरदास:</b> भक्ति काल के अनमोल रत्न।`
-    },
-    {
-      keywords: ["कविता", "poem", "नारे", "slogan", "विचार", "quotes", "लाइन", "शायरी", "quote"],
-      title: "✨ हिंदी दिवस के प्रसिद्ध नारे और विचार",
-      content: `<b>हिंदी दिवस के प्रमुख नारे व अनमोल विचार:</b><br><br>
-      1. <i>"निज भाषा उन्नति अहै, सब उन्नति को मूल। बिनु निज भाषा-ज्ञान के, मिटत न हिय को सूल।"</i> — <b>भारतेन्दु हरिश्चंद्र</b><br><br>
-      2. <i>"हिंदी हमारी राष्ट्र की अभिव्यक्ति का सबसे सरल और सशक्त माध्यम है।"</i> — <b>महात्मा गांधी</b><br><br>
-      3. <b>लोकप्रिय नारा:</b><br>
-      • <i>"हिंदी है तो हम हैं, हिंदी से हमारी पहचान है!"</i><br>
-      • <i>"देश की बिंदी, हमारी हिंदी!"</i><br>
-      • <i>"हिंदी में काम करना आसान है, यह भारत की शान है!"</i>`
-    },
-    {
-      keywords: ["तथ्य", "fact", "facts", "खास बातें", "विशेषता", "speakers", "लिपि", "देवनागरी"],
-      title: "💡 हिंदी भाषा के अद्भुत व रोचक तथ्य",
-      content: `<b>हिंदी के बारे में दिलचस्प बातें:</b><br><br>
-      • <b>विश्व में स्थान:</b> हिंदी दुनिया में तीसरी/चौथी सबसे ज़्यादा बोली जाने वाली भाषा है (60 करोड़ से अधिक लोग)।<br>
-      • <b>ध्वन्यात्मक भाषा (Phonetic Language):</b> हिंदी जैसा लिखी जाती है, बिल्कुल वैसा ही पढ़ी जाती है।<br>
-      • <b>पहला इंटरनेट शब्द:</b> 'Namaste' और 'Yoga' जैसे कई शब्द अंग्रेजी डिक्शनरी (Oxford) में शामिल हो चुके हैं।<br>
-      • <b>संसार की जननी:</b> हिंदी की जननी <b>संस्कृत</b> भाषा है और इसकी लिपि <b>देवनागरी</b> है।<br>
-      • <b>नमस्ते:</b> हिंदी में 'नमस्ते' शब्द सबसे अधिक इस्तेमाल किया जाने वाला अभिवादन है।`
-    },
-    {
-      keywords: ["व्याकरण", "grammar", "वर्णमाला", "स्वर", "व्यंजन", "alphabet"],
-      title: "📖 हिंदी वर्णमाला व व्याकरण की मूल बातें",
-      content: `<b>हिंदी वर्णमाला की संरचना:</b><br><br>
-      • <b>देवनागरी लिपि:</b> बाएं से दाएं लिखी जाती है।<br>
-      • <b>कुल वर्ण:</b> हिंदी वर्णमाला में <b>52 वर्ण</b> होते हैं।<br>
-      • <b>स्वर (Vowels):</b> 11 स्वर (अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ)।<br>
-      • <b>व्यंजन (Consonants):</b> 33 मुख्य व्यंजन (क-वर्ग से ह-वर्ग तक) + संयुक्त व अन्य व्यंजन।`
+      keywords: ["विश्व हिंदी दिवस", "10 जनवरी", "दोनों में अंतर"],
+      title: "🌐 राष्ट्रीय हिंदी दिवस बनाम विश्व हिंदी दिवस",
+      content: "राष्ट्रीय हिंदी दिवस (14 सितम्बर) भारत में राजभाषा दर्जे की याद में मनाया जाता है। जबकि 'विश्व हिंदी दिवस' (10 जनवरी) दुनिया भर में हिंदी के प्रचार-प्रसार के लिए मनाया जाता है, जिसकी शुरुआत 1975 के प्रथम विश्व हिंदी सम्मेलन की याद में हुई थी।"
     }
   ];
 
@@ -310,28 +181,72 @@
   const chatArea = document.getElementById("chatArea");
   const micBtn = document.getElementById("micBtn");
 
-  // Enter Key Handler
-  userInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") handleSend();
-  });
+  userInput.addEventListener("keypress", (e) => { if (e.key === "Enter") handleSend(); });
 
-  // Main Search Handler
-  function handleSend() {
+  async function handleSend() {
     const query = userInput.value.trim();
     if (!query) return;
 
-    // Remove Welcome
     const welcome = document.getElementById("welcomeCard");
     if (welcome) welcome.remove();
 
     addUserMessage(query);
     userInput.value = "";
 
-    // Search Matching Logic
-    setTimeout(() => {
-      const response = findBestResponse(query);
-      addBotMessage(response.title, response.content);
-    }, 300);
+    const loadingDiv = addBotMessage("🔍 खोजा जा रहा है...", "उत्तर तैयार किया जा रहा है, कृपया प्रतीक्षा करें...");
+
+    // 1. Check Local Match
+    let matched = checkLocalDB(query);
+
+    if (matched) {
+      loadingDiv.remove();
+      addBotMessage(matched.title, matched.content);
+    } else {
+      // 2. Dynamic Live Hindi Engine Fetch (Fetches ANY poet, biography, grammar, or literary topic)
+      try {
+        const wikiData = await fetchHindiWiki(query);
+        loadingDiv.remove();
+        if (wikiData) {
+          addBotMessage(`📖 ${wikiData.title}`, wikiData.snippet);
+        } else {
+          addBotMessage("🇮🇳 हिंदी सहायक", `क्षमा करें, **"${query}"** पर सटीक जानकारी नहीं मिली। कृपया कवि का पूरा नाम या विषय बदलकर प्रयास करें (उदा: 'महादेवी वर्मा', 'सूर्यकांत त्रिपाठी निराला', 'गोदान उपन्यास')।`);
+        }
+      } catch (err) {
+        loadingDiv.remove();
+        addBotMessage("⚠️ सर्वर एरर", "जानकारी लोड करने में समस्या आई। कृपया अपना इंटरनेट कनेक्शन जाँचें।");
+      }
+    }
+  }
+
+  function checkLocalDB(query) {
+    const q = query.toLowerCase();
+    for (let item of localKnowledge) {
+      if (item.keywords.some(kw => q.includes(kw))) {
+        return item;
+      }
+    }
+    return null;
+  }
+
+  // LIVE HINDI WIKIPEDIA SEARCH ENGINE
+  async function fetchHindiWiki(query) {
+    const url = `https://hi.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro=1&explaintext=1&generator=search&gsrlimit=1&gsrsearch=${encodeURIComponent(query)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.query && data.query.pages) {
+      const pageId = Object.keys(data.query.pages)[0];
+      const page = data.query.pages[pageId];
+      if (page.extract && page.extract.length > 30) {
+        let cleanText = page.extract.substring(0, 750);
+        if (page.extract.length > 750) cleanText += "...";
+        return {
+          title: page.title,
+          snippet: cleanText.replace(/\n/g, "<br>")
+        };
+      }
+    }
+    return null;
   }
 
   function askQuick(text) {
@@ -339,42 +254,6 @@
     handleSend();
   }
 
-  // Find Response Logic
-  function findBestResponse(query) {
-    const cleanQuery = query.toLowerCase();
-    let bestMatch = null;
-    let maxScore = 0;
-
-    knowledgeBase.forEach(item => {
-      let score = 0;
-      item.keywords.forEach(kw => {
-        if (cleanQuery.includes(kw.toLowerCase())) {
-          score += kw.length > 3 ? 3 : 1;
-        }
-      });
-      if (score > maxScore) {
-        maxScore = score;
-        bestMatch = item;
-      }
-    });
-
-    if (bestMatch && maxScore > 0) {
-      return bestMatch;
-    }
-
-    // Default Fallback
-    return {
-      title: "🇮🇳 हिंदी दिवस एआई सहायक",
-      content: `क्षमा करें, मुझे इस प्रश्न की सटीक जानकारी नहीं मिली। <br><br>आप नीचे दिए गए विषयों में से चुन सकते हैं:<br>
-      • <b>'इतिहास'</b> - हिंदी दिवस की शुरुआत कब हुई?<br>
-      • <b>'संविधान'</b> - अनुच्छेद 343 व राजभाषा नियम<br>
-      • <b>'कवि'</b> - मुंशी प्रेमचंद व दिनकर जी का योगदान<br>
-      • <b>'नारे'</b> - हिंदी दिवस के सुंदर विचार व स्लोगन<br>
-      • <b>'तथ्य'</b> - हिंदी भाषा के रोचक तथ्य`
-    };
-  }
-
-  // UI Messaging
   function addUserMessage(text) {
     const div = document.createElement("div");
     div.className = "message-row user-row";
@@ -386,8 +265,7 @@
   function addBotMessage(title, content) {
     const div = document.createElement("div");
     div.className = "message-row bot-row";
-
-    const speechText = stripHtml(title + ". " + content).replace(/'/g, "");
+    const speechText = stripHtml(title + ". " + content);
 
     div.innerHTML = `
       <div class="bubble bot-bubble">
@@ -398,14 +276,27 @@
     `;
     chatArea.appendChild(div);
     scrollToBottom();
+    return div;
   }
 
-  // Voice Search (Speech Recognition)
-  function startVoice() {
+  // BULLETPROOF MIC LOGIC WITH SAFE ERROR HANDLING
+  async function startVoice() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       alert("आपके ब्राउज़र में वॉइस सर्च सपोर्टेड नहीं है। कृपया लेटेस्ट Google Chrome का उपयोग करें।");
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(track => track.stop());
+    } catch (err) {
+      if (err.name === 'NotAllowedError') {
+        alert("माइक परमिशन ब्लॉक है। Chrome सेटिंग्स से Microphone Allow करें।");
+      } else {
+        alert("माइक हार्डवेयर उपलब्ध नहीं है या किसी अन्य ऐप (जैसे WhatsApp/Call) द्वारा इस्तेमाल हो रहा है।");
+      }
       return;
     }
 
@@ -419,70 +310,48 @@
     };
 
     recognition.onresult = (e) => {
-      const transcript = e.results[0][0].transcript;
-      userInput.value = transcript;
+      userInput.value = e.results[0][0].transcript;
       handleSend();
     };
 
     recognition.onerror = (e) => {
-      alert("आवाज़ पहचान में समस्या: " + e.error);
       resetMicUI();
+      if (e.error !== 'no-speech' && e.error !== 'aborted') {
+        alert("आवाज़ पहचान में समस्या: " + e.error);
+      }
     };
 
-    recognition.onend = () => {
-      resetMicUI();
-    };
+    recognition.onend = () => { resetMicUI(); };
 
-    recognition.start();
+    try { recognition.start(); } catch(e) {}
   }
 
   function resetMicUI() {
     micBtn.classList.remove("listening");
-    userInput.placeholder = "हिंदी दिवस के बारे में पूछें...";
+    userInput.placeholder = "हिंदी या किसी भी साहित्यकार के बारे में पूछें...";
   }
 
-  // Text to Speech (हिंदी में उत्तर सुनाना)
   function speakText(text) {
-    if (!('speechSynthesis' in window)) {
-      alert("आपका ब्राउज़र टेक्स्ट-टू-स्पीच का समर्थन नहीं करता।");
-      return;
-    }
-
-    window.speechSynthesis.cancel(); // Stop ongoing speech
-
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "hi-IN";
     utterance.rate = 0.95;
-
     window.speechSynthesis.speak(utterance);
   }
 
-  // Utilities
-  function toggleTheme() {
-    document.body.classList.toggle("dark");
-  }
-
+  function toggleTheme() { document.body.classList.toggle("dark"); }
   function clearChat() {
     chatArea.innerHTML = `
       <div class="welcome-card" id="welcomeCard">
-        <h2>नमस्ते! 🇮🇳 हिंदी दिवस सहायक में आपका स्वागत है</h2>
-        <p>हिंदी भाषा के इतिहास, संविधान, प्रसिद्ध कवियों, रचनाओं, सुंदर विचारों व नारों के बारे में कुछ भी पूछिए।</p>
+        <h2>नमस्ते! 👋 हिंदी के बारे में कुछ भी पूछिए</h2>
+        <p>किसी भी कवि की जीवनी, रचनाएं, उपन्यास, हिंदी इतिहास, व्याकरण या छंद-अलंकार के बारे में सवाल लिखें या बोलकर पूछें।</p>
       </div>
     `;
   }
-
-  function scrollToBottom() {
-    chatArea.scrollTop = chatArea.scrollHeight;
-  }
-
-  function escapeHtml(text) {
-    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
-
-  function escapeAttribute(text) {
-    return text.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-  }
-
+  function scrollToBottom() { chatArea.scrollTop = chatArea.scrollHeight; }
+  function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function escapeAttribute(text) { return text.replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
   function stripHtml(html) {
     let tmp = document.createElement("DIV");
     tmp.innerHTML = html;
